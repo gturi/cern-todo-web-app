@@ -11,6 +11,7 @@ import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +24,15 @@ public class TaskCategoriesController {
 
     private final TaskCategoriesMapper taskCategoriesMapper;
     private final TaskCategoriesService taskCategoriesService;
+
+    @GetMapping("/task-category/{categoryId}")
+    public ResponseEntity<TaskCategoryApi> getTaskCategory(@PathVariable Long categoryId) {
+        val result = taskCategoriesService.getTaskCategory(categoryId);
+
+        val apiResult = taskCategoriesMapper.businessToApi(result);
+
+        return ResponseEntity.ok(apiResult);
+    }
 
     @PostMapping("/task-category")
     public ResponseEntity<TaskCategoryApi> createTaskCategory(@Validated @RequestBody CreateTaskCategoryApi body) {

@@ -3,6 +3,7 @@ package ch.cern.todo.service;
 import ch.cern.todo.model.business.TaskCategory;
 import ch.cern.todo.model.mapper.TaskCategoriesMapper;
 import ch.cern.todo.repository.TaskCategoriesRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -15,6 +16,12 @@ public class TaskCategoriesService {
 
     private final TaskCategoriesMapper taskCategoriesMapper;
     private final TaskCategoriesRepository taskCategoriesRepository;
+
+    public TaskCategory getTaskCategory(Long categoryId) {
+        return taskCategoriesRepository.findById(categoryId)
+            .map(taskCategoriesMapper::entityToBusiness)
+            .orElseThrow(EntityNotFoundException::new);
+    }
 
     @Transactional
     public TaskCategory createTaskCategory(TaskCategory taskCategory) {
