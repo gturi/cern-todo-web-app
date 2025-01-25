@@ -8,5 +8,3 @@ You are free to use any library or testing framework in the project.
 Below you may find a proposition of the DB model:
 
 ![DB model](DBModel.png)
-
-Once you are ready, please send me **link to your git repository** which contains complete solution
