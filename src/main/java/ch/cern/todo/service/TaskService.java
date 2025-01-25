@@ -20,6 +20,14 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskCategoriesRepository taskCategoriesRepository;
 
+    public Task getTask(Long taskId) {
+        val taskEntity = taskRepository.getTaskById(taskId);
+
+        // TODO: throw 404 if not found
+
+        return taskMapper.entityToBusiness(taskEntity);
+    }
+
     @Transactional
     public Task createTask(Task task) {
         val taskCategory = taskCategoriesRepository.getReferenceById(task.getCategoryId());
