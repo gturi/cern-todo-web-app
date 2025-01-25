@@ -47,4 +47,9 @@ public class TaskCategoriesService {
 
         return taskCategoriesMapper.entityToBusiness(taskCategoryEntity);
     }
+
+    @Transactional
+    public void deleteTaskCategory(Long categoryId) {
+        taskCategoriesRepository.deleteById(categoryId);
+    }
 }
