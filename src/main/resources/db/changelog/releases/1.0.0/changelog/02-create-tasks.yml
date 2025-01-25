@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: gv
+      changes:
+        - createTable:
+            tableName: tasks
+            columns:
+              - column:
+                  name: task_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: creation_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: task_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: task_description
+                  type: varchar(500)
+              - column:
+                  name: deadline
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        -  addForeignKeyConstraint:
+            constraintName:  fk_tasks_task_categories
+            baseColumnNames: category_id
+            baseTableName: tasks
+            referencedColumnNames: category_id
+            referencedTableName: task_categories

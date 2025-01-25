@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: changelog/01-create-task-categories.yml
+      relativeToChangelogFile: true
+  - include:
+      file: changelog/02-create-tasks.yml
+      relativeToChangelogFile: true
