@@ -1,6 +1,5 @@
 package ch.cern.todo.model.api;
 
-import jakarta.annotation.Nonnull;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
