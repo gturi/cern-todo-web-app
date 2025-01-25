@@ -3,6 +3,7 @@ package ch.cern.todo.service;
 import ch.cern.todo.model.business.TaskCategory;
 import ch.cern.todo.model.mapper.TaskCategoriesMapper;
 import ch.cern.todo.repository.TaskCategoriesRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class TaskCategoriesService {
     private final TaskCategoriesMapper taskCategoriesMapper;
     private final TaskCategoriesRepository taskCategoriesRepository;
 
+    @Transactional
     public TaskCategory createTaskCategory(TaskCategory taskCategory) {
         val taskCategoryEntity = taskCategoriesMapper.businessToEntity(taskCategory);
 
