@@ -11,6 +11,7 @@ import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -56,5 +57,12 @@ public class TaskController {
         val apiResult = taskMapper.businessToApi(result);
 
         return ResponseEntity.ok(apiResult);
+    }
+
+    @DeleteMapping("/task/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
+        taskService.deleteTask(taskId);
+
+        return ResponseEntity.noContent().build();
     }
 }

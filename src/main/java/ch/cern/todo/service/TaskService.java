@@ -56,4 +56,9 @@ public class TaskService {
 
         return taskMapper.entityToBusiness(taskEntity);
     }
+
+    @Transactional
+    public void deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
+    }
 }
