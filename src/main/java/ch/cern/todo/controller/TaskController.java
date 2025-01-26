@@ -10,6 +10,7 @@ import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.mapper.PageMapper;
 import ch.cern.todo.model.mapper.TaskMapper;
 import ch.cern.todo.service.TaskService;
+import ch.cern.todo.util.LoggedUserUtils;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -66,6 +67,8 @@ public class TaskController {
 
     @PostMapping("/task")
     public ResponseEntity<TaskApi> createTask(@Validated @RequestBody CreateTaskApi body) {
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
         val input = Task.builder()
             .taskName(body.getTaskName())
             .taskDescription(body.getTaskDescription())
@@ -73,7 +76,7 @@ public class TaskController {
             .categoryId(body.getCategoryId())
             .build();
 
-        val result = taskService.createTask(input);
+        val result = taskService.createTask(input, loggedUserInfo);
 
         val apiResult = taskMapper.businessToApi(result);
 

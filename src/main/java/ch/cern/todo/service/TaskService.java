@@ -1,6 +1,7 @@
 package ch.cern.todo.service;
 
 import ch.cern.todo.model.business.CernPage;
+import ch.cern.todo.model.business.LoggedUserInfo;
 import ch.cern.todo.model.business.SearchTask;
 import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.mapper.TaskMapper;
@@ -37,11 +38,17 @@ public class TaskService {
     }
 
     @Transactional
-    public Task createTask(Task task) {
+    public Task createTask(Task task, LoggedUserInfo loggedUserInfo) {
         val taskCategory = taskCategoriesRepository.getReferenceById(task.getCategoryId());
 
         val taskEntity = taskMapper.businessToEntity(task);
         taskEntity.setTaskCategory(taskCategory);
+        taskEntity.setCreationUserId(loggedUserInfo.userId());
+        taskEntity.setCreationUserFirstname(loggedUserInfo.firstname());
+        taskEntity.setCreationUserLastname(loggedUserInfo.lastname());
+        taskEntity.setUpdateUserId(loggedUserInfo.userId());
+        taskEntity.setUpdateUserFirstname(loggedUserInfo.firstname());
+        taskEntity.setUpdateUserLastname(loggedUserInfo.lastname());
 
         taskRepository.save(taskEntity);
 

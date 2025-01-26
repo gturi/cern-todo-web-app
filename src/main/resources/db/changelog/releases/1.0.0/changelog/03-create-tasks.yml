@@ -19,8 +19,38 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: creation_user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_user_firstname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: creation_user_lastname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
                   name: update_date
                   type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_user_firstname
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: update_user_lastname
+                  type: varchar(50)
                   constraints:
                     nullable: false
               - column:
@@ -47,6 +77,18 @@ databaseChangeLog:
             baseTableName: tasks
             referencedColumnNames: category_id
             referencedTableName: task_categories
+        -  addForeignKeyConstraint:
+             constraintName:  fk_tasks_users_creation
+             baseColumnNames: creation_user_id
+             baseTableName: tasks
+             referencedColumnNames: user_id
+             referencedTableName: users
+        -  addForeignKeyConstraint:
+             constraintName:  fk_tasks_users_update
+             baseColumnNames: update_user_id
+             baseTableName: tasks
+             referencedColumnNames: user_id
+             referencedTableName: users
         -  createSequence:
              sequenceName:  tasks_task_id_seq
              startValue: 1

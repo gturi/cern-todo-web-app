@@ -10,6 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,12 +38,31 @@ public class TaskEntity extends AbstractEntity {
     @Column(name = "task_id")
     private Long taskId;
 
+    @Column(name = "creation_user_id", updatable = false)
+    private Long creationUserId;
+
+    @Column(name = "creation_user_firstname", updatable = false)
+    private String creationUserFirstname;
+
+    @Column(name = "creation_user_lastname", updatable = false)
+    private String creationUserLastname;
+
+    @Column(name = "update_user_id")
+    private Long updateUserId;
+
+    @Column(name = "update_user_firstname")
+    private String updateUserFirstname;
+
+    @Column(name = "update_user_lastname")
+    private String updateUserLastname;
+
     @Column(name = "task_name", nullable = false)
     private String taskName;
 
     @Column(name = "task_description")
     private String taskDescription;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deadline", nullable = false)
     private LocalDateTime deadline;
 
