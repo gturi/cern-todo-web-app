@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TaskRepository extends JpaRepository<TaskEntity, Long> {
+public interface TaskRepository extends JpaRepository<TaskEntity, Long>, TaskRepositoryCustom {
 
     @Query("""
         select t
