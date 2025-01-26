@@ -86,6 +86,8 @@ public class TaskController {
     @PutMapping("/task/{taskId}")
     public ResponseEntity<TaskApi> updateTask(@PathVariable Long taskId,
                                               @Validated @RequestBody UpdateTaskApi body) {
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
         val input = Task.builder()
             .taskId(taskId)
             .taskName(body.getTaskName())
@@ -94,7 +96,7 @@ public class TaskController {
             .categoryId(body.getCategoryId())
             .build();
 
-        val result = taskService.updateTask(input);
+        val result = taskService.updateTask(input, loggedUserInfo);
 
         val apiResult = taskMapper.businessToApi(result);
 

@@ -56,7 +56,7 @@ public class TaskService {
     }
 
     @Transactional
-    public Task updateTask(Task task) {
+    public Task updateTask(Task task, LoggedUserInfo loggedUserInfo) {
         val taskEntity = taskRepository.getReferenceById(task.getTaskId());
 
         if (StringUtils.isNotBlank(task.getTaskName())) {
@@ -74,6 +74,10 @@ public class TaskService {
             taskEntity.setCategoryId(task.getCategoryId());
             taskEntity.setTaskCategory(taskCategory);
         }
+
+        taskEntity.setUpdateUserId(loggedUserInfo.userId());
+        taskEntity.setUpdateUserFirstname(loggedUserInfo.firstname());
+        taskEntity.setUpdateUserLastname(loggedUserInfo.lastname());
 
         taskRepository.save(taskEntity);
 
