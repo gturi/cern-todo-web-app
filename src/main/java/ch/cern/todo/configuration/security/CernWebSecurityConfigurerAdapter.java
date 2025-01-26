@@ -4,8 +4,6 @@ import ch.cern.todo.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -42,13 +40,4 @@ public class CernWebSecurityConfigurerAdapter {
         // H2 console has its own login form, so it should be ignored
         return web -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/h2-console/**"));
     }
-
-    /*@Bean
-    public AuthenticationProvider authenticationProvider() {
-        // this will SecurityContextHolder.getContext().getAuthentication().getPrincipal()
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoderConfig.passwordEncoder());
-        return daoAuthenticationProvider;
-    }*/
 }
