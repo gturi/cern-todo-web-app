@@ -34,3 +34,7 @@ databaseChangeLog:
         -  addUniqueConstraint:
              tableName:  task_categories
              columnNames:  category_name
+        -  createSequence:
+             sequenceName:  task_categories_category_id_seq
+             startValue: 1
+             dataType: int

@@ -47,3 +47,7 @@ databaseChangeLog:
             baseTableName: tasks
             referencedColumnNames: category_id
             referencedTableName: task_categories
+        -  createSequence:
+             sequenceName:  tasks_task_id_seq
+             startValue: 1
+             dataType: int

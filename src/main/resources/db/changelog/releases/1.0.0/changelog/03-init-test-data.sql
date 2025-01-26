@@ -45,4 +45,4 @@ VALUES(nextval('tasks_task_id_seq'), now(), now(), 'Task 9', 'Task 9 description
 
 INSERT INTO tasks
 (task_id, creation_date, update_date, task_name, task_description, deadline, category_id)
-VALUES(nextval('tasks_task_id_seq'), now(), now(), 'Task 20', 'Task 10 description', '2025-01-25 20:41:23.000', (select category_id from task_categories where category_name = 'Category 2'));
+VALUES(nextval('tasks_task_id_seq'), now(), now(), 'Task 10', 'Task 10 description', '2025-01-25 20:41:23.000', (select category_id from task_categories where category_name = 'Category 2'));
