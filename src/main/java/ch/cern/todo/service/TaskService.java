@@ -9,12 +9,14 @@ import ch.cern.todo.repository.TaskCategoriesRepository;
 import ch.cern.todo.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TaskService {
@@ -58,6 +60,10 @@ public class TaskService {
     @Transactional
     public Task updateTask(Task task, LoggedUserInfo loggedUserInfo) {
         val taskEntity = taskRepository.getReferenceById(task.getTaskId());
+
+        if (!loggedUserInfo.isAdmin() && !taskEntity.getCreationUserId().equals(loggedUserInfo.userId())) {
+            throw new RuntimeException("You are not allowed to update this task"); // TODO: custom exception
+        }
 
         if (StringUtils.isNotBlank(task.getTaskName())) {
             taskEntity.setTaskName(task.getTaskName());
