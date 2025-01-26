@@ -1,10 +1,11 @@
 package ch.cern.todo.configuration.security;
 
+import ch.cern.todo.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -17,17 +18,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class CernWebSecurityConfigurerAdapter {
 
+    private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoderConfig passwordEncoderConfig;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-            .withUser("user1")
-            .password(passwordEncoderConfig.passwordEncoder().encode("user1Pass"))
-            .authorities("ROLE_USER");
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,7 +31,8 @@ public class CernWebSecurityConfigurerAdapter {
             )
             .httpBasic(httpSecurityHttpBasicConfigurer ->
                 httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint)
-            );
+            )
+            .userDetailsService(userDetailsService);
         //http.addFilterAfter(/*new CustomFilter(),*/ BasicAuthenticationFilter.class);
         return http.build();
     }
@@ -48,4 +42,13 @@ public class CernWebSecurityConfigurerAdapter {
         // H2 console has its own login form, so it should be ignored
         return web -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/h2-console/**"));
     }
+
+    /*@Bean
+    public AuthenticationProvider authenticationProvider() {
+        // this will SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoderConfig.passwordEncoder());
+        return daoAuthenticationProvider;
+    }*/
 }

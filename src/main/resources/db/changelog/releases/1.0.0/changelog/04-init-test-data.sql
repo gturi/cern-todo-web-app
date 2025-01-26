@@ -1,3 +1,24 @@
+-- CernAdminPassword
+INSERT INTO users
+(user_id, creation_date, update_date, username, password, firstname, lastname, role)
+VALUES(nextval('users_user_id_seq'), now(), now(), 'cernAdmin', '$2a$10$IWhDhCk2B0X4iWuKD1pSCuI7NRaOF6NtZqAEzJqSDVonqoXkfUawu', 'Cern', 'Admin', 'ROLE_ADMIN');
+
+-- AliceUserPassword
+INSERT INTO users
+(user_id, creation_date, update_date, username, password, firstname, lastname, role)
+VALUES(nextval('users_user_id_seq'), now(), now(), 'Alice', '$2a$10$.24auD3aCHzurRAJm0pv0eadbtpp/bCig8SuwlxIYia9FZIDgPIWi', 'Alice', 'Ikari', 'ROLE_USER');
+
+-- BobUserPassword
+INSERT INTO users
+(user_id, creation_date, update_date, username, password, firstname, lastname, role)
+VALUES(nextval('users_user_id_seq'), now(), now(), 'Bob', '$2a$10$paPBxu5qLXfE5o1Dbq/vv.yEzy79J/E1.5b3j6ljh7CMf.HqZG/NO', 'Bob', 'Ross', 'ROLE_USER');
+
+-- CharlieUserPassword
+INSERT INTO users
+(user_id, creation_date, update_date, username, password, firstname, lastname, role)
+VALUES(nextval('users_user_id_seq'), now(), now(), 'Chris', '$2a$10$V4F0YhQCAfaDJXW2Lwe/Ge3gwQBgrUe9EfVCtubgCw4GUlG3r8/N.', 'Chris', 'Fantasy', 'ROLE_USER');
+
+
 INSERT INTO task_categories
 (category_id, creation_date, update_date, category_name, category_description)
 VALUES(nextval('task_categories_category_id_seq'), now(), now(), 'Category 1', 'Category 1 description');

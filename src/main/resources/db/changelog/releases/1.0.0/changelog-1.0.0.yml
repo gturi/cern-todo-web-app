@@ -3,8 +3,11 @@ databaseChangeLog:
       file: changelog/01-create-task-categories.yml
       relativeToChangelogFile: true
   - include:
-      file: changelog/02-create-tasks.yml
+      file: changelog/02-create-users.yml
       relativeToChangelogFile: true
   - include:
-      file: changelog/03-init-test-data.sql
+      file: changelog/03-create-tasks.yml
+      relativeToChangelogFile: true
+  - include:
+      file: changelog/04-init-test-data.sql
       relativeToChangelogFile: true
