@@ -5,3 +5,6 @@ databaseChangeLog:
   - include:
       file: changelog/02-create-tasks.yml
       relativeToChangelogFile: true
+  - include:
+      file: changelog/03-init-test-data.sql
+      relativeToChangelogFile: true

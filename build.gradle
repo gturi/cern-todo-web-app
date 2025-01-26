@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.6.3'
 
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.6.5.Final'
 
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
