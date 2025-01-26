@@ -1,6 +1,7 @@
 package ch.cern.todo.service;
 
-import ch.cern.todo.model.business.CernPageable;
+import ch.cern.todo.model.business.CernPage;
+import ch.cern.todo.model.business.SearchTask;
 import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.mapper.TaskMapper;
 import ch.cern.todo.repository.TaskCategoriesRepository;
@@ -9,12 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -33,12 +30,8 @@ public class TaskService {
         return taskMapper.entityToBusiness(taskEntity);
     }
 
-
-    public Page<Task> getTasks(String userName, String taskName, String taskDescription, LocalDate deadline,
-                               String categoryName, CernPageable pageable) {
-        val tasks = taskRepository.findTasks(
-            userName, taskName, taskDescription, deadline, categoryName, pageable
-        );
+    public CernPage<Task> getTasks(SearchTask searchTask) {
+        val tasks = taskRepository.findTasks(searchTask);
 
         return tasks.map(taskMapper::entityToBusiness);
     }

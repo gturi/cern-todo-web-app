@@ -27,7 +27,7 @@ public class TaskCategoryEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_GENERATOR_NAME)
-    @SequenceGenerator(name = SEQUENCE_GENERATOR_NAME, sequenceName = "task_categories_category_id_seq")
+    @SequenceGenerator(name = SEQUENCE_GENERATOR_NAME, sequenceName = "task_categories_category_id_seq", allocationSize = 1)
     @Column(name = "category_id")
     private Long categoryId;
 

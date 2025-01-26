@@ -32,7 +32,7 @@ public class TaskEntity extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_GENERATOR_NAME)
-    @SequenceGenerator(name = SEQUENCE_GENERATOR_NAME, sequenceName = "tasks_task_id_seq")
+    @SequenceGenerator(name = SEQUENCE_GENERATOR_NAME, sequenceName = "tasks_task_id_seq", allocationSize = 1)
     @Column(name = "task_id")
     private Long taskId;
 
