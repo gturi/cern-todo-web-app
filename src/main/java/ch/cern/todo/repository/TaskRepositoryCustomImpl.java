@@ -1,6 +1,7 @@
 package ch.cern.todo.repository;
 
 import ch.cern.todo.model.business.CernPage;
+import ch.cern.todo.model.business.LoggedUserInfo;
 import ch.cern.todo.model.business.SearchTask;
 import ch.cern.todo.model.database.TaskCategoryEntity_;
 import ch.cern.todo.model.database.TaskEntity;
@@ -29,12 +30,12 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     private final EntityManager entityManager;
 
     @Override
-    public int countTasks(SearchTask searchTask) {
+    public int countTasks(SearchTask searchTask, LoggedUserInfo loggedUserInfo) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<TaskEntity> task = criteriaQuery.from(TaskEntity.class);
 
-        List<Predicate> predicates = findTasks(criteriaBuilder, task, searchTask);
+        List<Predicate> predicates = findTasks(criteriaBuilder, task, searchTask, loggedUserInfo);
 
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
@@ -47,8 +48,8 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
     @Transactional
     @Override
-    public CernPage<TaskEntity> findTasks(SearchTask searchTask) {
-        val count = countTasks(searchTask);
+    public CernPage<TaskEntity> findTasks(SearchTask searchTask, LoggedUserInfo loggedUserInfo) {
+        val count = countTasks(searchTask, loggedUserInfo);
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<TaskEntity> criteriaQuery = criteriaBuilder.createQuery(TaskEntity.class);
@@ -56,7 +57,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         Root<TaskEntity> task = criteriaQuery.from(TaskEntity.class);
         task.fetch(TaskEntity_.TASK_CATEGORY, JoinType.LEFT);
 
-        val selectQueryPredicates = findTasks(criteriaBuilder, task, searchTask);
+        val selectQueryPredicates = findTasks(criteriaBuilder, task, searchTask, loggedUserInfo);
 
         val selectQuery = criteriaQuery.where(selectQueryPredicates.toArray(new Predicate[0]));
 
@@ -75,11 +76,18 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         );
     }
 
-    private List<Predicate> findTasks(CriteriaBuilder criteriaBuilder, Root<TaskEntity> task, SearchTask searchTask) {
+    private List<Predicate> findTasks(CriteriaBuilder criteriaBuilder, Root<TaskEntity> task, SearchTask searchTask,
+                                      LoggedUserInfo loggedUserInfo) {
         List<Predicate> predicates = new ArrayList<>();
 
-        if (StringUtils.isNotBlank(searchTask.getUserName())) { // TODO: skip this if not admin
-            //predicates.add(criteriaBuilder.equals(task.get(TaskEntity_.), "%" + searchTask.getUserName().toLowerCase() + "%"));
+        if (!loggedUserInfo.isAdmin()) {
+            // normal users can only see the tasks they have created
+            predicates.add(criteriaBuilder.equal(task.get(TaskEntity_.creationUserId), loggedUserInfo.userId()));
+        }
+        // if the current user is not an admin, it does not make sense to add this filter,
+        // since he can see only the tasks he has created
+        if (loggedUserInfo.isAdmin() && StringUtils.isNotBlank(searchTask.getUserName())) {
+            predicates.add(criteriaBuilder.equal(task.get(TaskEntity_.creationUsername), searchTask.getUserName()));
         }
         if (StringUtils.isNotBlank(searchTask.getTaskName())) {
             predicates.add(criteriaBuilder.like(

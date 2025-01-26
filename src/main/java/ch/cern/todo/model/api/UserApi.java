@@ -11,6 +11,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserApi implements Serializable {
     private Long userId;
-    private String firstname;
-    private String lastname;
+    private String username;
 }

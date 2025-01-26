@@ -5,6 +5,7 @@ import ch.cern.todo.model.api.PageApi;
 import ch.cern.todo.model.api.TaskApi;
 import ch.cern.todo.model.api.UpdateTaskApi;
 import ch.cern.todo.model.business.CernPageable;
+import ch.cern.todo.model.business.LoggedUserInfo;
 import ch.cern.todo.model.business.SearchTask;
 import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.mapper.PageMapper;
@@ -55,12 +56,14 @@ public class TaskController {
                                                      @RequestParam(required = false) String categoryName,
                                                      @RequestParam(defaultValue = "0") @Min(0) int pageNumber,
                                                      @RequestParam(defaultValue = "10") @Min(1) int pageSize) {
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
         val input = new SearchTask(
             userName, taskName, taskDescription, deadline, categoryName,
             new CernPageable(pageNumber, pageSize)
         );
 
-        val result = taskService.getTasks(input);
+        val result = taskService.getTasks(input, loggedUserInfo);
 
         val apiResult = pageMapper.businessToApi(result, taskMapper::businessToApi);
 

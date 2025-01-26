@@ -40,8 +40,8 @@ public class TaskService {
         return taskMapper.entityToBusiness(taskEntity);
     }
 
-    public CernPage<Task> getTasks(SearchTask searchTask) {
-        val tasks = taskRepository.findTasks(searchTask);
+    public CernPage<Task> getTasks(SearchTask searchTask, LoggedUserInfo loggedUserInfo) {
+        val tasks = taskRepository.findTasks(searchTask, loggedUserInfo);
 
         return tasks.map(taskMapper::entityToBusiness);
     }
@@ -53,11 +53,9 @@ public class TaskService {
         val taskEntity = taskMapper.businessToEntity(task);
         taskEntity.setTaskCategory(taskCategory);
         taskEntity.setCreationUserId(loggedUserInfo.userId());
-        taskEntity.setCreationUserFirstname(loggedUserInfo.firstname());
-        taskEntity.setCreationUserLastname(loggedUserInfo.lastname());
+        taskEntity.setCreationUsername(loggedUserInfo.username());
         taskEntity.setUpdateUserId(loggedUserInfo.userId());
-        taskEntity.setUpdateUserFirstname(loggedUserInfo.firstname());
-        taskEntity.setUpdateUserLastname(loggedUserInfo.lastname());
+        taskEntity.setUpdateUsername(loggedUserInfo.username());
 
         taskRepository.save(taskEntity);
 
@@ -89,8 +87,7 @@ public class TaskService {
         }
 
         taskEntity.setUpdateUserId(loggedUserInfo.userId());
-        taskEntity.setUpdateUserFirstname(loggedUserInfo.firstname());
-        taskEntity.setUpdateUserLastname(loggedUserInfo.lastname());
+        taskEntity.setUpdateUsername(loggedUserInfo.username());
 
         taskRepository.save(taskEntity);
 

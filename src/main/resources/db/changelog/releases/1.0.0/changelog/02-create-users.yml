@@ -48,10 +48,10 @@ databaseChangeLog:
                   type: varchar(10)
                   constraints:
                     nullable: false
-        -  createSequence:
-             sequenceName:  users_user_id_seq
-             startValue: 1
-             dataType: int
-        -  addUniqueConstraint:
-             tableName:  users
-             columnNames:  username
+        - createSequence:
+            sequenceName: users_user_id_seq
+            startValue: 1
+            dataType: int
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: username

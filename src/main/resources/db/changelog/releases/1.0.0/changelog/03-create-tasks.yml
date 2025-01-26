@@ -24,13 +24,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: creation_user_firstname
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: creation_user_lastname
-                  type: varchar(50)
+                  name: creation_username
+                  type: varchar(20)
                   constraints:
                     nullable: false
               - column:
@@ -44,13 +39,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: update_user_firstname
-                  type: varchar(50)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: update_user_lastname
-                  type: varchar(50)
+                  name: update_username
+                  type: varchar(20)
                   constraints:
                     nullable: false
               - column:
@@ -71,25 +61,25 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
-        -  addForeignKeyConstraint:
-            constraintName:  fk_tasks_task_categories
+        - addForeignKeyConstraint:
+            constraintName: fk_tasks_task_categories
             baseColumnNames: category_id
             baseTableName: tasks
             referencedColumnNames: category_id
             referencedTableName: task_categories
-        -  addForeignKeyConstraint:
-             constraintName:  fk_tasks_users_creation
-             baseColumnNames: creation_user_id
-             baseTableName: tasks
-             referencedColumnNames: user_id
-             referencedTableName: users
-        -  addForeignKeyConstraint:
-             constraintName:  fk_tasks_users_update
-             baseColumnNames: update_user_id
-             baseTableName: tasks
-             referencedColumnNames: user_id
-             referencedTableName: users
-        -  createSequence:
-             sequenceName:  tasks_task_id_seq
-             startValue: 1
-             dataType: int
+        - addForeignKeyConstraint:
+            constraintName: fk_tasks_users_creation
+            baseColumnNames: creation_user_id
+            baseTableName: tasks
+            referencedColumnNames: user_id
+            referencedTableName: users
+        - addForeignKeyConstraint:
+            constraintName: fk_tasks_users_update
+            baseColumnNames: update_user_id
+            baseTableName: tasks
+            referencedColumnNames: user_id
+            referencedTableName: users
+        - createSequence:
+            sequenceName: tasks_task_id_seq
+            startValue: 1
+            dataType: int

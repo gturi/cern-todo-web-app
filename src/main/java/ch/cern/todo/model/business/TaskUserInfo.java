@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TaskUserInfo {
     private Long userId;
-    private String firstname;
-    private String lastname;
+    private String username;
 }

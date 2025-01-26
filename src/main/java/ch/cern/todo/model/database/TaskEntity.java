@@ -41,20 +41,14 @@ public class TaskEntity extends AbstractEntity {
     @Column(name = "creation_user_id", updatable = false)
     private Long creationUserId;
 
-    @Column(name = "creation_user_firstname", updatable = false)
-    private String creationUserFirstname;
-
-    @Column(name = "creation_user_lastname", updatable = false)
-    private String creationUserLastname;
+    @Column(name = "creation_username", updatable = false)
+    private String creationUsername;
 
     @Column(name = "update_user_id")
     private Long updateUserId;
 
-    @Column(name = "update_user_firstname")
-    private String updateUserFirstname;
-
-    @Column(name = "update_user_lastname")
-    private String updateUserLastname;
+    @Column(name = "update_username")
+    private String updateUsername;
 
     @Column(name = "task_name", nullable = false)
     private String taskName;

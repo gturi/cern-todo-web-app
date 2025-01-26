@@ -31,10 +31,10 @@ databaseChangeLog:
               - column:
                   name: category_description
                   type: varchar(500)
-        -  addUniqueConstraint:
-             tableName:  task_categories
-             columnNames:  category_name
-        -  createSequence:
-             sequenceName:  task_categories_category_id_seq
-             startValue: 1
-             dataType: int
+        - addUniqueConstraint:
+            tableName: task_categories
+            columnNames: category_name
+        - createSequence:
+            sequenceName: task_categories_category_id_seq
+            startValue: 1
+            dataType: int
