@@ -24,11 +24,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: creation_username
-                  type: varchar(20)
-                  constraints:
-                    nullable: false
-              - column:
                   name: update_date
                   type: timestamp
                   constraints:
@@ -36,11 +31,6 @@ databaseChangeLog:
               - column:
                   name: update_user_id
                   type: bigint
-                  constraints:
-                    nullable: false
-              - column:
-                  name: update_username
-                  type: varchar(20)
                   constraints:
                     nullable: false
               - column:
@@ -61,6 +51,16 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+              - column:
+                  name: assigned_to_user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assigned_to_username
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
         - addForeignKeyConstraint:
             constraintName: fk_tasks_task_categories
             baseColumnNames: category_id
@@ -76,6 +76,12 @@ databaseChangeLog:
         - addForeignKeyConstraint:
             constraintName: fk_tasks_users_update
             baseColumnNames: update_user_id
+            baseTableName: tasks
+            referencedColumnNames: user_id
+            referencedTableName: users
+        - addForeignKeyConstraint:
+            constraintName: fk_tasks_users_assigned_to
+            baseColumnNames: assigned_to_user_id
             baseTableName: tasks
             referencedColumnNames: user_id
             referencedTableName: users

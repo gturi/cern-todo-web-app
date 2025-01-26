@@ -21,4 +21,5 @@ public class UpdateTaskApi implements Serializable {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDateTime deadline;
     private Long categoryId;
+    private Long userId;
 }

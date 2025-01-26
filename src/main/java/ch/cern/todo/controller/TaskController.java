@@ -8,6 +8,7 @@ import ch.cern.todo.model.business.CernPageable;
 import ch.cern.todo.model.business.LoggedUserInfo;
 import ch.cern.todo.model.business.SearchTask;
 import ch.cern.todo.model.business.Task;
+import ch.cern.todo.model.business.TaskUserInfo;
 import ch.cern.todo.model.mapper.PageMapper;
 import ch.cern.todo.model.mapper.TaskMapper;
 import ch.cern.todo.service.TaskService;
@@ -79,6 +80,9 @@ public class TaskController {
             .taskDescription(body.getTaskDescription())
             .deadline(body.getDeadline())
             .categoryId(body.getCategoryId())
+            .assignedToUserInfo(TaskUserInfo.builder()
+                .userId(body.getUserId())
+                .build())
             .build();
 
         val result = taskService.createTask(input, loggedUserInfo);
@@ -99,6 +103,9 @@ public class TaskController {
             .taskDescription(body.getTaskDescription())
             .deadline(body.getDeadline())
             .categoryId(body.getCategoryId())
+            .assignedToUserInfo(TaskUserInfo.builder()
+                .userId(body.getUserId())
+                .build())
             .build();
 
         val result = taskService.updateTask(input, loggedUserInfo);
@@ -110,7 +117,9 @@ public class TaskController {
 
     @DeleteMapping("/v1/task/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
-        taskService.deleteTask(taskId);
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
+        taskService.deleteTask(taskId, loggedUserInfo);
 
         return ResponseEntity.noContent().build();
     }

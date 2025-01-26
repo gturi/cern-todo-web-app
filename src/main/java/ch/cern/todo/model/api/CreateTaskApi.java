@@ -24,4 +24,6 @@ public class CreateTaskApi implements Serializable {
     private LocalDateTime deadline;
     @NotNull
     private Long categoryId;
+    @NotNull
+    private Long userId;
 }

@@ -41,14 +41,8 @@ public class TaskEntity extends AbstractEntity {
     @Column(name = "creation_user_id", updatable = false)
     private Long creationUserId;
 
-    @Column(name = "creation_username", updatable = false)
-    private String creationUsername;
-
     @Column(name = "update_user_id")
     private Long updateUserId;
-
-    @Column(name = "update_username")
-    private String updateUsername;
 
     @Column(name = "task_name", nullable = false)
     private String taskName;
@@ -66,4 +60,10 @@ public class TaskEntity extends AbstractEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
     private TaskCategoryEntity taskCategory;
+
+    @Column(name = "assigned_to_user_id", updatable = false)
+    private Long assignedToUserId;
+
+    @Column(name = "assigned_to_username", updatable = false)
+    private String assignedToUsername;
 }

@@ -20,5 +20,5 @@ public class Task {
     private LocalDateTime deadline;
     private Long categoryId;
     private TaskCategory taskCategory;
-    private TaskUserInfo lastUpdateUserInfo;
+    private TaskUserInfo assignedToUserInfo;
 }

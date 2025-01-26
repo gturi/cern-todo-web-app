@@ -21,5 +21,5 @@ public class TaskApi implements Serializable {
     private LocalDateTime deadline;
     private Long categoryId;
     private TaskCategoryApi taskCategory;
-    private UserApi lastUpdateUserInfo;
+    private UserApi assignedToUserInfo;
 }

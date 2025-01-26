@@ -82,12 +82,12 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
         if (!loggedUserInfo.isAdmin()) {
             // normal users can only see the tasks they have created
-            predicates.add(criteriaBuilder.equal(task.get(TaskEntity_.creationUserId), loggedUserInfo.userId()));
+            //predicates.add(criteriaBuilder.equal(task.get(TaskEntity_.), loggedUserInfo.userId()));
         }
         // if the current user is not an admin, it does not make sense to add this filter,
         // since he can see only the tasks he has created
         if (loggedUserInfo.isAdmin() && StringUtils.isNotBlank(searchTask.getUserName())) {
-            predicates.add(criteriaBuilder.equal(task.get(TaskEntity_.creationUsername), searchTask.getUserName()));
+            //predicates.add(criteriaBuilder.equal(task.get(TaskEntity_.creationUsername), searchTask.getUserName()));
         }
         if (StringUtils.isNotBlank(searchTask.getTaskName())) {
             predicates.add(criteriaBuilder.like(

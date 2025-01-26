@@ -14,7 +14,7 @@ public interface TaskMapper {
 
     TaskEntity businessToEntity(Task task);
 
-    @Mapping(target = "lastUpdateUserInfo.userId", source = "updateUserId")
-    @Mapping(target = "lastUpdateUserInfo.username", source = "updateUsername")
+    @Mapping(target = "assignedToUserInfo.userId", source = "assignedToUserId")
+    @Mapping(target = "assignedToUserInfo.username", source = "assignedToUsername")
     Task entityToBusiness(TaskEntity taskEntity);
 }

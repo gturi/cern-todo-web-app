@@ -28,168 +28,194 @@ INSERT INTO task_categories
 VALUES(nextval('task_categories_category_id_seq'), now(), now(), 'Category 2', 'Category 2 description');
 
 
+INSERT INTO tasks(task_id,creation_date, creation_user_id,update_date, update_user_id,task_name, task_description, deadline,category_id,assigned_to_user_id, assigned_to_username)
+VALUES(nextval('tasks_task_id_seq'),now(), 1,now(), 1,'Task 1', 'Task 1 description', '2025-01-25 20:41:23.000',1,1, 'cernAdmin');
+
+
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'cernAdmin'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 1', 'Task 1 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 1')
+    (select category_id from task_categories where category_name = 'Category 1'),
+    (select user_id from users where username = 'cernAdmin'), 'cernAdmin'
 );
 
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'cernAdmin'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 2', 'Task 2 description', '2025-01-25 20:41:23.000',
-     (select category_id from task_categories where category_name = 'Category 1')
+     (select category_id from task_categories where category_name = 'Category 1'),
+     (select user_id from users where username = 'cernAdmin'), 'cernAdmin'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'cernAdmin'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 3', 'Task 3 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 1')
+    (select category_id from task_categories where category_name = 'Category 1'),
+    (select user_id from users where username = 'cernAdmin'), 'cernAdmin'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'aliceUser'), 'aliceUser',
-    now(), (select user_id from users where username = 'aliceUser'), 'aliceUser',
+    now(), (select user_id from users where username = 'aliceUser'),
+    now(), (select user_id from users where username = 'aliceUser'),
     'Task 4', 'Task 4 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 1')
+    (select category_id from task_categories where category_name = 'Category 1'),
+    (select user_id from users where username = 'aliceUser'), 'aliceUser'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'aliceUser'), 'aliceUser',
-    now(), (select user_id from users where username = 'aliceUser'), 'aliceUser',
+    now(), (select user_id from users where username = 'cernAdmin'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 5', 'Task 5 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 1')
+    (select category_id from task_categories where category_name = 'Category 1'),
+    (select user_id from users where username = 'aliceUser'), 'aliceUser'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'aliceUser'), 'aliceUser',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'aliceUser'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 6', 'Task 6 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 2')
+    (select category_id from task_categories where category_name = 'Category 2'),
+    (select user_id from users where username = 'cernAdmin'), 'cernAdmin'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'bobUser'), 'bobUser',
-    now(), (select user_id from users where username = 'bobUser'), 'bobUser',
+    now(), (select user_id from users where username = 'bobUser'),
+    now(), (select user_id from users where username = 'bobUser'),
     'Task 7', 'Task 7 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 2')
+    (select category_id from task_categories where category_name = 'Category 2'),
+    (select user_id from users where username = 'bobUser'), 'bobUser'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'bobUser'), 'bobUser',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'bobUser'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 8', 'Task 8 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 2')
+    (select category_id from task_categories where category_name = 'Category 2'),
+    (select user_id from users where username = 'bobUser'), 'bobUser'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'bobUser'), 'bobUser',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'bobUser'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 9', 'Task 9 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 2')
+    (select category_id from task_categories where category_name = 'Category 2'),
+    (select user_id from users where username = 'bobUser'), 'bobUser'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'chrisUser'), 'chrisUser',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'chrisUser'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 10', 'Task 10 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 2')
+    (select category_id from task_categories where category_name = 'Category 2'),
+    (select user_id from users where username = 'cernAdmin'), 'cernAdmin'
 );
 
 INSERT INTO tasks(
     task_id,
-    creation_date, creation_user_id, creation_username,
-    update_date, update_user_id, update_username,
+    creation_date, creation_user_id,
+    update_date, update_user_id,
     task_name, task_description, deadline,
-    category_id
+    category_id,
+    assigned_to_user_id, assigned_to_username
 )
 VALUES(
     nextval('tasks_task_id_seq'),
-    now(), (select user_id from users where username = 'chrisUser'), 'chrisUser',
-    now(), (select user_id from users where username = 'cernAdmin'), 'cernAdmin',
+    now(), (select user_id from users where username = 'chrisUser'),
+    now(), (select user_id from users where username = 'cernAdmin'),
     'Task 11', 'Task 11 description', '2025-01-25 20:41:23.000',
-    (select category_id from task_categories where category_name = 'Category 2')
+    (select category_id from task_categories where category_name = 'Category 2'),
+    (select user_id from users where username = 'cernAdmin'), 'cernAdmin'
 );

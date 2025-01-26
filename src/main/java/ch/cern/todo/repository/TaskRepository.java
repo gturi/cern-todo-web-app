@@ -26,4 +26,11 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long>, TaskRep
         where t.taskId = :taskId
         """)
     TaskEntity getTaskById(@Param("taskId") Long taskId);
+
+    @Query("""
+        select t.creationUserId
+        from TaskEntity t
+        where t.taskId = :taskId
+        """)
+    Long getCreatorUserId(@Param("taskId") Long taskId);
 }
