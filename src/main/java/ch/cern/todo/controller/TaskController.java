@@ -38,7 +38,9 @@ public class TaskController {
 
     @GetMapping("/v1/task/{taskId}")
     public ResponseEntity<TaskApi> getTask(@PathVariable Long taskId) {
-        val result = taskService.getTask(taskId);
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
+        val result = taskService.getTask(taskId, loggedUserInfo);
 
         val apiResult = taskMapper.businessToApi(result);
 

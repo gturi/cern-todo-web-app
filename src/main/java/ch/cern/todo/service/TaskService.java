@@ -25,10 +25,17 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskCategoriesRepository taskCategoriesRepository;
 
-    public Task getTask(Long taskId) {
+    public Task getTask(Long taskId, LoggedUserInfo loggedUserInfo) {
         val taskEntity = taskRepository.getTaskById(taskId);
 
         // TODO: throw 404 if not found
+
+        // TODO: If security is a concern and we want to avoid exposing unnecessary information,
+        //  the exception should be a generic 404. In that case, loggedUserInfo.userId() could be added as
+        //  a filter of getTaskById() paramethers
+        if (!loggedUserInfo.isAdmin() && !taskEntity.getCreationUserId().equals(loggedUserInfo.userId())) {
+            throw new RuntimeException("You are not allowed to see this task"); // TODO: custom exception
+        }
 
         return taskMapper.entityToBusiness(taskEntity);
     }
