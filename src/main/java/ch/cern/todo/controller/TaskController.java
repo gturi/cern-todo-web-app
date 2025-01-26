@@ -10,6 +10,7 @@ import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.mapper.PageMapper;
 import ch.cern.todo.model.mapper.TaskMapper;
 import ch.cern.todo.service.TaskService;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.http.HttpStatus;
@@ -49,8 +50,8 @@ public class TaskController {
                                                      @RequestParam(required = false) String taskDescription,
                                                      @RequestParam(required = false) LocalDate deadline,
                                                      @RequestParam(required = false) String categoryName,
-                                                     @RequestParam(defaultValue = "0") int pageNumber,
-                                                     @RequestParam(defaultValue = "10") int pageSize) {
+                                                     @RequestParam(defaultValue = "0") @Min(0) int pageNumber,
+                                                     @RequestParam(defaultValue = "10") @Min(1) int pageSize) {
         val input = new SearchTask(
             userName, taskName, taskDescription, deadline, categoryName,
             new CernPageable(pageNumber, pageSize)
