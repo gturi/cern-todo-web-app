@@ -26,7 +26,7 @@ public class TaskCategoriesController {
     private final TaskCategoriesMapper taskCategoriesMapper;
     private final TaskCategoriesService taskCategoriesService;
 
-    @GetMapping("/task-category/{categoryId}")
+    @GetMapping("/v1/task-category/{categoryId}")
     public ResponseEntity<TaskCategoryApi> getTaskCategory(@PathVariable Long categoryId) {
         val result = taskCategoriesService.getTaskCategory(categoryId);
 
@@ -35,7 +35,7 @@ public class TaskCategoriesController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @PostMapping("/task-category")
+    @PostMapping("/v1/task-category")
     public ResponseEntity<TaskCategoryApi> createTaskCategory(@Validated @RequestBody CreateTaskCategoryApi body) {
         val input = TaskCategory.builder()
             .categoryName(body.getCategoryName())
@@ -49,7 +49,7 @@ public class TaskCategoriesController {
         return new ResponseEntity<>(apiResult, HttpStatus.CREATED);
     }
 
-    @PutMapping("/task-category/{categoryId}")
+    @PutMapping("/v1/task-category/{categoryId}")
     public ResponseEntity<TaskCategoryApi> updateTaskCategory(@PathVariable Long categoryId,
                                                               @Validated @RequestBody UpdateTaskCategoryApi body) {
         val input = TaskCategory.builder()
@@ -66,7 +66,7 @@ public class TaskCategoriesController {
     }
 
 
-    @DeleteMapping("/task-category/{categoryId}")
+    @DeleteMapping("/v1/task-category/{categoryId}")
     public ResponseEntity<Void> deleteTaskCategory(@PathVariable Long categoryId) {
         taskCategoriesService.deleteTaskCategory(categoryId);
 

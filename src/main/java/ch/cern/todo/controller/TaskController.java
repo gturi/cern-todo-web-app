@@ -36,7 +36,7 @@ public class TaskController {
     private final TaskMapper taskMapper;
     private final TaskService taskService;
 
-    @GetMapping("/task/{taskId}")
+    @GetMapping("/v1/task/{taskId}")
     public ResponseEntity<TaskApi> getTask(@PathVariable Long taskId) {
         val result = taskService.getTask(taskId);
 
@@ -45,7 +45,7 @@ public class TaskController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @GetMapping("/task")
+    @GetMapping("/v1/task")
     public ResponseEntity<PageApi<TaskApi>> getTasks(@RequestParam(required = false) String userName,
                                                      @RequestParam(required = false) String taskName,
                                                      @RequestParam(required = false) String taskDescription,
@@ -65,7 +65,7 @@ public class TaskController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @PostMapping("/task")
+    @PostMapping("/v1/task")
     public ResponseEntity<TaskApi> createTask(@Validated @RequestBody CreateTaskApi body) {
         val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
 
@@ -83,7 +83,7 @@ public class TaskController {
         return new ResponseEntity<>(apiResult, HttpStatus.CREATED);
     }
 
-    @PutMapping("/task/{taskId}")
+    @PutMapping("/v1/task/{taskId}")
     public ResponseEntity<TaskApi> updateTask(@PathVariable Long taskId,
                                               @Validated @RequestBody UpdateTaskApi body) {
         val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
@@ -103,7 +103,7 @@ public class TaskController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @DeleteMapping("/task/{taskId}")
+    @DeleteMapping("/v1/task/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
 
