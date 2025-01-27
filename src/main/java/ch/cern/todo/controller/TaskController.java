@@ -15,6 +15,7 @@ import ch.cern.todo.service.TaskService;
 import ch.cern.todo.util.LoggedUserUtils;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class TaskController {
@@ -49,6 +51,7 @@ public class TaskController {
         return ResponseEntity.ok(apiResult);
     }
 
+    /// @param userName it is ignored when logged as a user
     @GetMapping("/v1/task")
     public ResponseEntity<PageApi<TaskApi>> getTasks(@RequestParam(required = false) String userName,
                                                      @RequestParam(required = false) String taskName,
@@ -61,6 +64,49 @@ public class TaskController {
 
         val input = new SearchTask(
             userName, taskName, taskDescription, deadline, categoryName,
+            new CernPageable(pageNumber, pageSize)
+        );
+
+        val result = taskService.getTasks(input, loggedUserInfo);
+
+        val apiResult = pageMapper.businessToApi(result, taskMapper::businessToApi);
+
+        return ResponseEntity.ok(apiResult);
+    }
+
+    @GetMapping("/v1/admin/task")
+    public ResponseEntity<PageApi<TaskApi>> getTasksAsAdmin(@RequestParam(required = false) String userName,
+                                                            @RequestParam(required = false) String taskName,
+                                                            @RequestParam(required = false) String taskDescription,
+                                                            @RequestParam(required = false) LocalDate deadline,
+                                                            @RequestParam(required = false) String categoryName,
+                                                            @RequestParam(defaultValue = "0") @Min(0) int pageNumber,
+                                                            @RequestParam(defaultValue = "10") @Min(1) int pageSize) {
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
+        val input = new SearchTask(
+            userName, taskName, taskDescription, deadline, categoryName,
+            new CernPageable(pageNumber, pageSize)
+        );
+
+        val result = taskService.getTasks(input, loggedUserInfo);
+
+        val apiResult = pageMapper.businessToApi(result, taskMapper::businessToApi);
+
+        return ResponseEntity.ok(apiResult);
+    }
+
+    @GetMapping("/v1/user/task")
+    public ResponseEntity<PageApi<TaskApi>> getTasksAsUser(@RequestParam(required = false) String taskName,
+                                                           @RequestParam(required = false) String taskDescription,
+                                                           @RequestParam(required = false) LocalDate deadline,
+                                                           @RequestParam(required = false) String categoryName,
+                                                           @RequestParam(defaultValue = "0") @Min(0) int pageNumber,
+                                                           @RequestParam(defaultValue = "10") @Min(1) int pageSize) {
+        val loggedUserInfo = LoggedUserUtils.getLoggedUserInfo();
+
+        val input = new SearchTask(
+            null, taskName, taskDescription, deadline, categoryName,
             new CernPageable(pageNumber, pageSize)
         );
 

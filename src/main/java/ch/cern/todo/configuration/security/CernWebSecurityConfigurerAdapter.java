@@ -1,5 +1,6 @@
 package ch.cern.todo.configuration.security;
 
+import ch.cern.todo.model.business.Role;
 import ch.cern.todo.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +26,12 @@ public class CernWebSecurityConfigurerAdapter {
         http.csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(expressionInterceptUrlRegistry ->
-                expressionInterceptUrlRegistry.anyRequest().authenticated()
+                expressionInterceptUrlRegistry
+                    // instead of having a shared path for all roles,
+                    // the application can be organized to provide different paths for different roles
+                    .requestMatchers(new AntPathRequestMatcher("/v1/admin/**")).hasAnyAuthority(Role.ROLE_ADMIN.name())
+                    .requestMatchers(new AntPathRequestMatcher("/v1/user/**")).hasAnyAuthority(Role.ROLE_USER.name())
+                    .anyRequest().authenticated()
             )
             .httpBasic(httpSecurityHttpBasicConfigurer ->
                 httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint)
