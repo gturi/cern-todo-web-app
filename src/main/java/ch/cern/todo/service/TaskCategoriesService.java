@@ -5,7 +5,6 @@ import ch.cern.todo.model.business.TaskCategory;
 import ch.cern.todo.model.database.TaskCategoryEntity;
 import ch.cern.todo.model.mapper.TaskCategoriesMapper;
 import ch.cern.todo.repository.TaskCategoriesRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;

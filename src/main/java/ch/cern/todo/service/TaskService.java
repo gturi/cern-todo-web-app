@@ -30,7 +30,6 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskCategoriesRepository taskCategoriesRepository;
     private final UserRepository userRepository;
-    private final TaskCategoriesService taskCategoriesService;
 
     public Task getTask(Long taskId, LoggedUserInfo loggedUserInfo) {
         val taskEntity = taskRepository.getTaskById(taskId);
