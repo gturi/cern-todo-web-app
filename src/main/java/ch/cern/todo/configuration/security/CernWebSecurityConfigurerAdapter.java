@@ -18,7 +18,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class CernWebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
-    private final PasswordEncoderConfig passwordEncoderConfig;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
