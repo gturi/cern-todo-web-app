@@ -1,6 +1,7 @@
 package ch.cern.todo.integration.controller;
 
 import ch.cern.todo.controller.TaskCategoriesController;
+import ch.cern.todo.integration.config.ContainerTest;
 import ch.cern.todo.integration.util.ObjectMapperUtil;
 import ch.cern.todo.model.api.CreateTaskCategoryApi;
 import ch.cern.todo.model.api.TaskCategoryApi;
@@ -37,31 +38,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
+@ContainerTest
 class TaskCategoriesControllerTest {
-
-    @LocalServerPort
-    private Integer port;
-
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17.2-alpine");
-
-    @BeforeAll
-    static void beforeAll() {
-        postgres.start();
-    }
-
-    @AfterAll
-    static void afterAll() {
-        postgres.stop();
-    }
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
 
     @Autowired
     private MockMvc mockMvc;
