@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -16,6 +17,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateTaskApi implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 5107724138527177091L;
+
     private String taskName;
     private String taskDescription;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

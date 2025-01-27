@@ -13,6 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+
 
 @Builder
 @Getter
@@ -23,6 +25,8 @@ import lombok.Setter;
 @Table(name = "task_categories")
 public class TaskCategoryEntity extends AbstractEntity {
 
+    @Serial
+    private static final long serialVersionUID = 2641143783290071218L;
     private static final String SEQUENCE_GENERATOR_NAME = "task_categories_generator_name";
 
     @Id

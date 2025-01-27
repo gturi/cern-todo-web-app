@@ -16,6 +16,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+
 
 @Builder
 @Getter
@@ -26,6 +28,8 @@ import lombok.Setter;
 @Table(name = "users")
 public class UserEntity extends AbstractEntity {
 
+    @Serial
+    private static final long serialVersionUID = 1731187228026313926L;
     private static final String SEQUENCE_GENERATOR_NAME = "users_generator_name";
 
     @Id

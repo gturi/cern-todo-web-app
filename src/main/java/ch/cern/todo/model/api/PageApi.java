@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageApi<T extends Serializable> implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1301766106610597865L;
 
     private List<T> content;
     /**

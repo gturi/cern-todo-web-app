@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 
@@ -30,6 +31,8 @@ import java.time.LocalDateTime;
 @Table(name = "tasks")
 public class TaskEntity extends AbstractEntity {
 
+    @Serial
+    private static final long serialVersionUID = -8461529744930958874L;
     private static final String SEQUENCE_GENERATOR_NAME = "tasks_generator_name";
 
     @Id
