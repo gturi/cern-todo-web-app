@@ -11,6 +11,7 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
@@ -59,7 +60,8 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
         val selectQueryPredicates = findTasks(criteriaBuilder, task, searchTask, loggedUserInfo);
 
-        val selectQuery = criteriaQuery.where(selectQueryPredicates.toArray(new Predicate[0]));
+        val selectQuery = criteriaQuery.where(selectQueryPredicates.toArray(new Predicate[0]))
+            .orderBy(criteriaBuilder.asc(task.get(TaskEntity_.taskId)));
 
         TypedQuery<TaskEntity> typedQuery = entityManager.createQuery(selectQuery);
         typedQuery.setFirstResult(searchTask.getPageable().getPageNumber() * searchTask.getPageable().getPageSize());
