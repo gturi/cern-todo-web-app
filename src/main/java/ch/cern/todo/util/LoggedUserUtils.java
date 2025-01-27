@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class LoggedUserUtils {
                 cernAuthenticatedUser.getFirstname(), cernAuthenticatedUser.getLastname(),
                 authoritiesToRoles(cernAuthenticatedUser.getAuthorities())
             ))
-            .orElseThrow(); // TODO: define a custom exception
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     private static Set<Role> authoritiesToRoles(Collection<GrantedAuthority> authorities) {
