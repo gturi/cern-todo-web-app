@@ -1,10 +1,8 @@
 package ch.cern.todo.configuration.httpfilter;
 
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -28,19 +26,18 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class HttpRequestFilter implements Filter {
+@WebFilter(filterName = "RequestCachingFilter", urlPatterns = "/*")
+public class HttpRequestFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-        throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        val cachingRequestWrapper = new ContentCachingRequestWrapper(request);
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        val cachedHttpServletRequest = new CachedHttpServletRequest(request);
 
-        logRequest(cachingRequestWrapper);
+        logRequest(cachedHttpServletRequest);
 
         try {
-            filterChain.doFilter(cachingRequestWrapper, response);
+            filterChain.doFilter(cachedHttpServletRequest, response);
         } catch (IOException | ServletException e) {
             log.error("Error while executing filter chain", e);
             throw e;

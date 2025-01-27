@@ -36,7 +36,6 @@ public class CernWebSecurityConfigurerAdapter {
                 httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint)
             )
             .userDetailsService(userDetailsService);
-        //http.addFilterAfter(/*new CustomFilter(),*/ BasicAuthenticationFilter.class);
         return http.build();
     }
 
