@@ -27,6 +27,10 @@ INSERT INTO task_categories
 (category_id, creation_date, update_date, category_name, category_description)
 VALUES(nextval('task_categories_category_id_seq'), now(), now(), 'Category 2', 'Category 2 description');
 
+INSERT INTO task_categories
+(category_id, creation_date, update_date, category_name, category_description)
+VALUES(nextval('task_categories_category_id_seq'), now(), now(), 'Category 3', 'Category 3 description');
+
 
 INSERT INTO tasks(task_id,creation_date, creation_user_id,update_date, update_user_id,task_name, task_description, deadline,category_id,assigned_to_user_id, assigned_to_username)
 VALUES(nextval('tasks_task_id_seq'),now(), 1,now(), 1,'Task 1', 'Task 1 description', '2025-01-25 20:41:23.000',1,1, 'cernAdmin');
