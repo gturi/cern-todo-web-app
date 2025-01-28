@@ -11,7 +11,6 @@ import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.JoinType;
-import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
@@ -36,7 +35,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<TaskEntity> task = criteriaQuery.from(TaskEntity.class);
 
-        List<Predicate> predicates = findTasks(criteriaBuilder, task, searchTask, loggedUserInfo);
+        List<Predicate> predicates = buildFindTasksPredicates(criteriaBuilder, task, searchTask, loggedUserInfo);
 
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
 
@@ -58,7 +57,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         Root<TaskEntity> task = criteriaQuery.from(TaskEntity.class);
         task.fetch(TaskEntity_.TASK_CATEGORY, JoinType.LEFT);
 
-        val selectQueryPredicates = findTasks(criteriaBuilder, task, searchTask, loggedUserInfo);
+        val selectQueryPredicates = buildFindTasksPredicates(criteriaBuilder, task, searchTask, loggedUserInfo);
 
         val selectQuery = criteriaQuery.where(selectQueryPredicates.toArray(new Predicate[0]))
             .orderBy(criteriaBuilder.asc(task.get(TaskEntity_.taskId)));
@@ -78,8 +77,8 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         );
     }
 
-    private List<Predicate> findTasks(CriteriaBuilder criteriaBuilder, Root<TaskEntity> task, SearchTask searchTask,
-                                      LoggedUserInfo loggedUserInfo) {
+    private List<Predicate> buildFindTasksPredicates(CriteriaBuilder criteriaBuilder, Root<TaskEntity> task,
+                                                     SearchTask searchTask, LoggedUserInfo loggedUserInfo) {
         List<Predicate> predicates = new ArrayList<>();
 
         if (!loggedUserInfo.isAdmin()) {
