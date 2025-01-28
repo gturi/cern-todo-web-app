@@ -5,6 +5,7 @@ import ch.cern.todo.model.business.TaskCategory;
 import ch.cern.todo.model.database.TaskCategoryEntity;
 import ch.cern.todo.model.mapper.TaskCategoriesMapper;
 import ch.cern.todo.repository.TaskCategoriesRepository;
+import ch.cern.todo.repository.TaskRepository;
 import ch.cern.todo.service.TaskCategoriesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,8 @@ class TaskCategoriesServiceTest {
 
     @Mock
     private TaskCategoriesRepository taskCategoriesRepository;
+    @Mock
+    private TaskRepository taskRepository;
 
     private TaskCategoriesService taskCategoriesService;
 
@@ -48,7 +51,9 @@ class TaskCategoriesServiceTest {
 
         TaskCategoriesMapper taskCategoriesMapper = Mappers.getMapper(TaskCategoriesMapper.class);
 
-        taskCategoriesService = new TaskCategoriesService(taskCategoriesMapper, taskCategoriesRepository);
+        taskCategoriesService = new TaskCategoriesService(
+            taskCategoriesMapper, taskCategoriesRepository, taskRepository
+        );
     }
 
     @Test
@@ -119,10 +124,12 @@ class TaskCategoriesServiceTest {
     @Test
     void deleteTaskCategory_ValidId_ShouldDeleteCategory() {
         when(taskCategoriesRepository.findById(1L)).thenReturn(Optional.of(taskCategoryEntity));
+        when(taskRepository.existsTaskAssociatedToCategory(1L)).thenReturn(false);
 
         taskCategoriesService.deleteTaskCategory(1L);
 
         verify(taskCategoriesRepository, times(1)).delete(taskCategoryEntity);
+        verify(taskRepository, times(1)).existsTaskAssociatedToCategory(1L);
     }
 
     @Test
@@ -136,5 +143,21 @@ class TaskCategoriesServiceTest {
         assertEquals("Task category not found", exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND.value(), exception.getStatusCode());
         verify(taskCategoriesRepository, times(1)).findById(1L);
+        verify(taskRepository, times(0)).existsTaskAssociatedToCategory(1L);
+    }
+
+    @Test
+    void deleteTaskCategory_AssociatedToTask_ShouldThrowException() {
+        when(taskCategoriesRepository.findById(1L)).thenReturn(Optional.of(taskCategoryEntity));
+        when(taskRepository.existsTaskAssociatedToCategory(1L)).thenReturn(true);
+
+        CernException exception = assertThrows(CernException.class, () ->
+            taskCategoriesService.deleteTaskCategory(1L)
+        );
+
+        assertEquals("Cannot delete task category since it is associated to a task", exception.getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), exception.getStatusCode());
+        verify(taskCategoriesRepository, times(1)).findById(1L);
+        verify(taskRepository, times(1)).existsTaskAssociatedToCategory(1L);
     }
 }

@@ -5,6 +5,7 @@ import ch.cern.todo.model.business.TaskCategory;
 import ch.cern.todo.model.database.TaskCategoryEntity;
 import ch.cern.todo.model.mapper.TaskCategoriesMapper;
 import ch.cern.todo.repository.TaskCategoriesRepository;
+import ch.cern.todo.repository.TaskRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -18,6 +19,7 @@ public class TaskCategoriesService {
 
     private final TaskCategoriesMapper taskCategoriesMapper;
     private final TaskCategoriesRepository taskCategoriesRepository;
+    private final TaskRepository taskRepository;
 
     public TaskCategory getTaskCategory(Long categoryId) {
         val taskCategoryEntity = getTaskCategoryEntity(categoryId);
@@ -53,6 +55,13 @@ public class TaskCategoriesService {
     @Transactional
     public void deleteTaskCategory(Long categoryId) {
         val taskCategoryEntity = getTaskCategoryEntity(categoryId);
+
+        if (taskRepository.existsTaskAssociatedToCategory(categoryId)) {
+            throw new CernException(
+                "Cannot delete task category since it is associated to a task", HttpStatus.BAD_REQUEST
+            );
+        }
+
         taskCategoriesRepository.delete(taskCategoryEntity);
     }
 

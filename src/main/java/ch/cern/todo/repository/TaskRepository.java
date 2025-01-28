@@ -33,4 +33,12 @@ public interface TaskRepository extends JpaRepository<TaskEntity, Long>, TaskRep
         where t.taskId = :taskId
         """)
     Long getCreatorUserId(@Param("taskId") Long taskId);
+
+    @Query(value = """
+        select case when (count(*) > 0) then true else false end
+        from tasks t
+        where t.category_id = :taskCategoryId
+        limit 1
+        """, nativeQuery = true)
+    boolean existsTaskAssociatedToCategory(@Param("taskCategoryId") Long taskCategoryId);
 }
