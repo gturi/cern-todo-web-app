@@ -2,29 +2,21 @@ package ch.cern.todo.integration.controller;
 
 import ch.cern.todo.controller.TaskCategoriesController;
 import ch.cern.todo.integration.config.ContainerTest;
+import ch.cern.todo.integration.config.SpringBootIntegrationTest;
 import ch.cern.todo.integration.util.ObjectMapperUtil;
 import ch.cern.todo.model.api.CreateTaskCategoryApi;
-import ch.cern.todo.model.api.TaskCategoryApi;
 import ch.cern.todo.model.api.UpdateTaskCategoryApi;
 import ch.cern.todo.model.business.TaskCategory;
 import ch.cern.todo.model.mapper.TaskCategoriesMapper;
 import ch.cern.todo.service.TaskCategoriesService;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.PostgreSQLContainer;
 
 import static ch.cern.todo.integration.util.HttpHeadersUtil.getAdminHeaders;
 import static org.mockito.Mockito.any;
@@ -38,11 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
+@SpringBootIntegrationTest
 @ContainerTest
+@AutoConfigureMockMvc
 class TaskCategoriesControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -54,22 +45,6 @@ class TaskCategoriesControllerTest {
 
     @Autowired
     private TaskCategoriesController taskCategoriesController;
-
-    private TaskCategory taskCategory;
-    private TaskCategoryApi taskCategoryApi;
-
-    @BeforeEach
-    void setUp() {
-        taskCategory = new TaskCategory();
-        taskCategory.setCategoryId(1L);
-        taskCategory.setCategoryName("Test Category");
-        taskCategory.setCategoryDescription("Test Description");
-
-        taskCategoryApi = new TaskCategoryApi();
-        taskCategoryApi.setCategoryId(1L);
-        taskCategoryApi.setCategoryName("Test Category");
-        taskCategoryApi.setCategoryDescription("Test Description");
-    }
 
     @Test
     void getTaskCategory_ValidId_ShouldReturnCategory() throws Exception {
