@@ -24,7 +24,7 @@ public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHan
 
     @ExceptionHandler(CernException.class)
     public final ResponseEntity<ErrorResponseApi> cernExceptionHandler(CernException exception) {
-        log.error("An exception occurred", exception);
+        log.error("A CernException occurred", exception);
         val body = new ErrorResponseApi(exception.getMessage());
         return ResponseEntity.status(HttpStatus.valueOf(exception.getStatusCode()))
             .contentType(MediaType.APPLICATION_JSON)
