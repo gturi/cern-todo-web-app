@@ -19,6 +19,7 @@ public class CernWebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
+    private final AccessDeniedErrorHandler accessDeniedErrorHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,6 +32,9 @@ public class CernWebSecurityConfigurerAdapter {
                     .requestMatchers(new AntPathRequestMatcher("/v1/admin/**")).hasAnyAuthority(Role.ROLE_ADMIN.name())
                     .requestMatchers(new AntPathRequestMatcher("/v1/user/**")).hasAnyAuthority(Role.ROLE_USER.name())
                     .anyRequest().authenticated()
+            )
+            .exceptionHandling(exceptionHandlingConfigurer ->
+                exceptionHandlingConfigurer.accessDeniedHandler(accessDeniedErrorHandler)
             )
             .httpBasic(httpSecurityHttpBasicConfigurer ->
                 httpSecurityHttpBasicConfigurer.authenticationEntryPoint(authenticationEntryPoint)

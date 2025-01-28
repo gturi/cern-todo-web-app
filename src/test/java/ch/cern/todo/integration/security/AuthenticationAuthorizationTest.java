@@ -81,7 +81,8 @@ class AuthenticationAuthorizationTest {
     @Test
     void getAdminApi_WithUserCredentials_ShouldReturnUnauthorized() throws Exception {
         mockMvc.perform(get("/v1/admin/task").headers(getAliceHeaders()))
-            .andExpect(status().isForbidden());
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.description").value("Unauthorized"));
 
         verify(taskService, times(0)).getTasks(any(), any());
     }
@@ -97,7 +98,8 @@ class AuthenticationAuthorizationTest {
     @Test
     void getUserApi_WithAdminCredentials_ShouldReturnUnauthorized() throws Exception {
         mockMvc.perform(get("/v1/user/task").headers(getAdminHeaders()))
-            .andExpect(status().isForbidden());
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.description").value("Unauthorized"));
 
         verify(taskService, times(0)).getTasks(any(), any());
     }
