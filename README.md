@@ -26,12 +26,12 @@ cd ..
 
 The configured users credentials are:
 
-|username |password           |role |
-|---------|-------------------|-----|
-|cernAdmin|CernAdminPassword  |ADMIN|
-|aliceUser|AliceUserPassword  |USER |
-|bobUser  |BobUserPassword    |USER |
-|chrisUser|CharlieUserPassword|USER |
+| username  | password            | role  |
+|-----------|---------------------|-------|
+| cernAdmin | CernAdminPassword   | ADMIN |
+| aliceUser | AliceUserPassword   | USER  |
+| bobUser   | BobUserPassword     | USER  |
+| chrisUser | CharlieUserPassword | USER  |
 
 
 ## Further enhancements
