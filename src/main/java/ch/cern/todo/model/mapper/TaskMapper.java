@@ -12,6 +12,10 @@ public interface TaskMapper {
 
     TaskApi businessToApi(Task task);
 
+    @Mapping(target = "updateUserId", ignore = true)
+    @Mapping(target = "creationUserId", ignore = true)
+    @Mapping(target = "assignedToUsername", ignore = true)
+    @Mapping(target = "assignedToUserId", ignore = true)
     TaskEntity businessToEntity(Task task);
 
     @Mapping(target = "assignedToUserInfo.userId", source = "assignedToUserId")
