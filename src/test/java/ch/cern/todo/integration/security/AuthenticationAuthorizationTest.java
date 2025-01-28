@@ -19,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,7 +39,8 @@ class AuthenticationAuthorizationTest {
     @Test
     void getApi_WithoutCredentials_ShouldReturnUnauthorized() throws Exception {
         mockMvc.perform(get("/v1/task"))
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.description").value("Unauthorized"));
 
         verify(taskService, times(0)).getTasks(any(), any());
     }
@@ -46,7 +48,8 @@ class AuthenticationAuthorizationTest {
     @Test
     void getApi_WithoutWrongCredentials_ShouldReturnUnauthorized() throws Exception {
         mockMvc.perform(get("/v1/task").headers(getAuthorizationHeaders("cernAdmin", "wrong-password")))
-            .andExpect(status().isUnauthorized());
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.description").value("Unauthorized"));
 
         verify(taskService, times(0)).getTasks(any(), any());
     }
