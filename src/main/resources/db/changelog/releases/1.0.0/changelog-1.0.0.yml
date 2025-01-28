@@ -11,4 +11,5 @@ databaseChangeLog:
   - include:
       file: changelog/04-init-test-data.sql
       relativeToChangelogFile: true
+      # only 'test' profile is working, the changeset is not executed when context is 'dev'
       contextFilter: "test or dev"
