@@ -14,8 +14,7 @@ public class CernException extends RuntimeException {
     private final int statusCode;
 
     public CernException(String message, HttpStatus httpStatus) {
-        super(message);
-        this.statusCode = httpStatus.value();
+        this(message, httpStatus.value());
     }
 
     public CernException(String message, int statusCode) {
@@ -24,7 +23,11 @@ public class CernException extends RuntimeException {
     }
 
     public CernException(String message, HttpStatus httpStatus, Throwable cause) {
+        this(message, httpStatus.value(), cause);
+    }
+
+    public CernException(String message, int statusCode, Throwable cause) {
         super(message, cause);
-            this.statusCode = httpStatus.value();
+        this.statusCode = statusCode;
     }
 }
