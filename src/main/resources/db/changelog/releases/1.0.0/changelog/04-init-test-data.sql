@@ -1,3 +1,5 @@
+--changeset gv:1 context:test,dev
+
 -- CernAdminPassword
 INSERT INTO users
 (user_id, creation_date, update_date, username, password, firstname, lastname, role)
