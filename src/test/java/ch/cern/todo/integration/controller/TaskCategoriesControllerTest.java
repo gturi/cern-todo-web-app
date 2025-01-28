@@ -3,7 +3,7 @@ package ch.cern.todo.integration.controller;
 import ch.cern.todo.controller.TaskCategoriesController;
 import ch.cern.todo.integration.config.ContainerTest;
 import ch.cern.todo.integration.config.SpringBootIntegrationTest;
-import ch.cern.todo.integration.util.ObjectMapperUtil;
+import ch.cern.todo.util.ObjectMapperUtil;
 import ch.cern.todo.model.api.CreateTaskCategoryApi;
 import ch.cern.todo.model.api.UpdateTaskCategoryApi;
 import ch.cern.todo.model.business.TaskCategory;

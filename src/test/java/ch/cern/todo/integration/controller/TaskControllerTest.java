@@ -4,7 +4,7 @@ import ch.cern.todo.controller.TaskController;
 import ch.cern.todo.integration.config.ContainerTest;
 import ch.cern.todo.integration.config.SpringBootIntegrationTest;
 import ch.cern.todo.integration.util.HttpHeadersUtil;
-import ch.cern.todo.integration.util.ObjectMapperUtil;
+import ch.cern.todo.util.ObjectMapperUtil;
 import ch.cern.todo.model.api.CreateTaskApi;
 import ch.cern.todo.model.api.UpdateTaskApi;
 import ch.cern.todo.model.business.LoggedUserInfo;
