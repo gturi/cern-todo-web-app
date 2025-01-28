@@ -7,7 +7,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 
 public class TestContainerInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:17.2-alpine")
+    protected PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:17.2-alpine")
             .withDatabaseName("unit-test")
             .withUsername("test")
             .withPassword("test");
