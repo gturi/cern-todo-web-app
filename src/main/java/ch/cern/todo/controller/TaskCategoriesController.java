@@ -65,7 +65,6 @@ public class TaskCategoriesController {
         return ResponseEntity.ok(apiResult);
     }
 
-
     @DeleteMapping("/v1/task-category/{categoryId}")
     public ResponseEntity<Void> deleteTaskCategory(@PathVariable Long categoryId) {
         taskCategoriesService.deleteTaskCategory(categoryId);
