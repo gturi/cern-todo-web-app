@@ -1,5 +1,7 @@
 package ch.cern.todo.configuration.security;
 
+import ch.cern.todo.configuration.httpfilter.HttpRequestFilter;
+import ch.cern.todo.configuration.httpfilter.HttpResponseFilter;
 import ch.cern.todo.model.business.Role;
 import ch.cern.todo.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -10,21 +12,29 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class CernWebSecurityConfigurerAdapter {
+public class CernWebSecurityConfiguration {
 
+    private final HttpRequestFilter httpRequestFilter;
+    private final HttpResponseFilter httpResponseFilter;
     private final UserDetailsServiceImpl userDetailsService;
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
     private final AccessDeniedErrorHandler accessDeniedErrorHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // csrf is disabled since browsers will not interact directly with the application
         http.csrf(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
+            // adding these filters to the security chain is necessary to log request and response details
+            // when an authentication error occurs
+            .addFilterBefore(httpRequestFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(httpResponseFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                 expressionInterceptUrlRegistry
                     // instead of having a shared path for all roles,

@@ -1,10 +1,8 @@
 package ch.cern.todo.configuration.httpfilter;
 
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +10,7 @@ import lombok.val;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
@@ -22,16 +21,15 @@ import java.util.StringJoiner;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class HttpResponseFilter implements Filter {
+public class HttpResponseFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-        throws ServletException, IOException {
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
         ContentCachingResponseWrapper cachingResponseWrapper = new ContentCachingResponseWrapper(response);
 
         try {
-            filterChain.doFilter(servletRequest, cachingResponseWrapper);
+            filterChain.doFilter(request, cachingResponseWrapper);
         } catch (IOException | ServletException e) {
             log.error("Error while executing filter chain", e);
             throw e;
