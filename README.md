@@ -24,6 +24,15 @@ cd ..
 ./gradlew bootRun --args='--spring.profiles.active=dev'
 ```
 
+The configured users credentials are:
+
+|username |password           |role |
+|---------|-------------------|-----|
+|cernAdmin|CernAdminPassword  |ADMIN|
+|aliceUser|AliceUserPassword  |USER |
+|bobUser  |BobUserPassword    |USER |
+|chrisUser|CharlieUserPassword|USER |
+
 
 ## Further enhancements
 
