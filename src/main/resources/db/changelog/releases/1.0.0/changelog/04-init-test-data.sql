@@ -1,4 +1,4 @@
---changeset gv:1 context:test,dev
+--changeset gv:1
 
 -- CernAdminPassword
 INSERT INTO users
