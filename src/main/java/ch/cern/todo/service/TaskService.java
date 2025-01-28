@@ -40,7 +40,7 @@ public class TaskService {
 
         // TODO: If security is a concern and we want to avoid exposing unnecessary information,
         //  the exception should be a generic 404. In that case, loggedUserInfo.userId() could be added as
-        //  a filter of getTaskById() paramethers
+        //  a filter of getTaskById() parameters
         if (!loggedUserInfo.isAdmin() && !taskEntity.getAssignedToUserId().equals(loggedUserInfo.userId())) {
             throw new CernException("You are not allowed to see this task", HttpStatus.UNAUTHORIZED);
         }
