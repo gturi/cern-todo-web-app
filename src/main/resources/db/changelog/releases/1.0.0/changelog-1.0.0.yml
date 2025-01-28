@@ -11,6 +11,4 @@ databaseChangeLog:
   - include:
       file: changelog/04-init-test-data.sql
       relativeToChangelogFile: true
-      # TODO: one of these should work according to the documentation, but it doesn't
-      #contextFilter: "test,dev"
-      #context: "test,dev"
+      contextFilter: "test or dev"
