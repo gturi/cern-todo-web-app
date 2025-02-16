@@ -81,9 +81,7 @@ class TaskServiceTest {
     void getTask_TaskNotFound_ShouldThrowException() {
         when(taskRepository.getTaskById(1L)).thenReturn(null);
 
-        CernException exception = assertThrows(CernException.class, () ->
-            taskService.getTask(1L, regularUser)
-        );
+        CernException exception = assertThrows(CernException.class, () -> taskService.getTask(1L, regularUser));
 
         assertEquals(HttpStatus.NOT_FOUND.value(), exception.getStatusCode());
         verify(taskRepository, times(1)).getTaskById(1L);
@@ -158,9 +156,7 @@ class TaskServiceTest {
         task.setTaskId(1L);
         task.setCategoryId(2L);
 
-        CernException exception = assertThrows(CernException.class, () ->
-            taskService.updateTask(task, regularUser)
-        );
+        CernException exception = assertThrows(CernException.class, () -> taskService.updateTask(task, regularUser));
 
         assertEquals(HttpStatus.UNAUTHORIZED.value(), exception.getStatusCode());
     }

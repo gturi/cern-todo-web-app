@@ -71,8 +71,9 @@ class TaskCategoriesServiceTest {
     void getTaskCategory_InvalidId_ShouldThrowException() {
         when(taskCategoriesRepository.findById(1L)).thenReturn(Optional.empty());
 
-        CernException exception = assertThrows(CernException.class, () ->
-            taskCategoriesService.getTaskCategory(1L));
+        CernException exception = assertThrows(
+            CernException.class, () -> taskCategoriesService.getTaskCategory(1L)
+        );
 
         assertEquals("Task category not found", exception.getMessage());
         assertEquals(HttpStatus.NOT_FOUND.value(), exception.getStatusCode());
