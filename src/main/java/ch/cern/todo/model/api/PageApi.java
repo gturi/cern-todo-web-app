@@ -32,5 +32,5 @@ public class PageApi<T extends Serializable> implements Serializable {
     /**
      * {@link PageImpl#getTotalPages()}
      */
-    private int totalPages;
+    private long totalPages;
 }

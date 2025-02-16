@@ -27,7 +27,15 @@ public class CernPage<T> {
     /**
      * {@link PageImpl#getTotalPages()}
      */
-    private final int totalPages;
+    private final long totalPages;
+
+    public CernPage(List<T> content, CernPageable pageable, long totalElementsCount) {
+        this.content = content;
+        number = pageable.getPageNumber();
+        size = pageable.getPageSize();
+        numberOfElements = content.size();
+        totalPages = Math.ceilDiv(totalElementsCount, size);
+    }
 
     public <K> CernPage<K> map(Function<T, K> mapper) {
         return new CernPage<>(content.stream().map(mapper).toList(), number, size, numberOfElements, totalPages);

@@ -30,7 +30,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
     private final EntityManager entityManager;
 
     @Override
-    public int countTasks(SearchTask searchTask, LoggedUserInfo loggedUserInfo) {
+    public long countTasks(SearchTask searchTask, LoggedUserInfo loggedUserInfo) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<TaskEntity> task = criteriaQuery.from(TaskEntity.class);
@@ -43,7 +43,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
         TypedQuery<Long> typedQuery = entityManager.createQuery(criteriaQuery);
 
-        return typedQuery.getSingleResult().intValue();
+        return typedQuery.getSingleResult();
     }
 
     @Transactional
@@ -55,7 +55,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
         CriteriaQuery<TaskEntity> criteriaQuery = criteriaBuilder.createQuery(TaskEntity.class);
 
         Root<TaskEntity> task = criteriaQuery.from(TaskEntity.class);
-        task.fetch(TaskEntity_.TASK_CATEGORY, JoinType.LEFT);
+        task.fetch(TaskEntity_.TASK_CATEGORY, JoinType.INNER);
 
         val selectQueryPredicates = buildFindTasksPredicates(criteriaBuilder, task, searchTask, loggedUserInfo);
 
@@ -68,13 +68,7 @@ public class TaskRepositoryCustomImpl implements TaskRepositoryCustom {
 
         List<TaskEntity> taskEntities = typedQuery.getResultList();
 
-        return new CernPage<>(
-            taskEntities,
-            searchTask.getPageable().getPageNumber(),
-            searchTask.getPageable().getPageSize(),
-            taskEntities.size(),
-            count / searchTask.getPageable().getPageSize() + (count % searchTask.getPageable().getPageSize() == 0 ? 0 : 1)
-        );
+        return new CernPage<>(taskEntities, searchTask.getPageable(), count);
     }
 
     private List<Predicate> buildFindTasksPredicates(CriteriaBuilder criteriaBuilder, Root<TaskEntity> task,
