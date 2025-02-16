@@ -5,7 +5,6 @@ import ch.cern.todo.model.api.PageApi;
 import ch.cern.todo.model.api.TaskApi;
 import ch.cern.todo.model.api.UpdateTaskApi;
 import ch.cern.todo.model.business.CernPageable;
-import ch.cern.todo.model.business.LoggedUserInfo;
 import ch.cern.todo.model.business.SearchTask;
 import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.business.TaskUserInfo;

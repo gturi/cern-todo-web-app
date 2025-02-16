@@ -3,7 +3,6 @@ package ch.cern.todo.configuration.httpfilter;
 import jakarta.servlet.ReadListener;
 import jakarta.servlet.ServletInputStream;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

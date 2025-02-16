@@ -3,7 +3,6 @@ package ch.cern.todo.model.mapper;
 import ch.cern.todo.model.api.TaskApi;
 import ch.cern.todo.model.business.Task;
 import ch.cern.todo.model.database.TaskEntity;
-import jakarta.persistence.Column;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
